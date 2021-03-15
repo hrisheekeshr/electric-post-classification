@@ -10,20 +10,24 @@ labels = {
     0 : 'metal'
 }
 
-def predict(image_path):
+new_model = tf.keras.models.load_model('models/saved_model_new')
 
-    image = Image.open(image_path).resize(IMAGE_SIZE)
-    image_np = np.array(image)/255.0
+def predict(image):
 
-    new_model = tf.keras.models.load_model('models/saved_model')
+    image_resized = image.resize(IMAGE_SIZE)
+    image_np = np.array(image_resized)/255.0
 
     result = new_model.predict(image_np[np.newaxis, ...])
+    print(result)
     predicted_class = np.argmax(result[0], axis=-1)
 
-    plt.imshow(image)
+    plt.imshow(image_resized)
     plt.axis('off')
     predicted_class_name = labels[predicted_class]
     _ = plt.title("Prediction: " + predicted_class_name.title())
     plt.show()
+    return predicted_class_name, image
 
-predict('test/metal.jpg')
+# image_path = 'test/wood.jpg'
+# image = Image.open(image_path)
+# predict(image)

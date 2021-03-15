@@ -114,7 +114,8 @@ steps_per_epoch = train_generator.samples // train_generator.batch_size
 validation_steps = valid_generator.samples // valid_generator.batch_size
 hist = model.fit(
     train_generator,
-    epochs=5, steps_per_epoch=steps_per_epoch,
+    epochs=25, steps_per_epoch=steps_per_epoch,
     validation_data=valid_generator,
     validation_steps=validation_steps).history
 
+model.save('models/saved_model_new')
